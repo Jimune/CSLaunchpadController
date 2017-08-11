@@ -1,20 +1,29 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using Launchpad.Utils;
 
 namespace Launchpad.LaunchHandler {
 
-    public class LaunchEventHandler {
+    public class LaunchEvent {
+        public int Key { get; private set; }
+        public KeyState State { get; private set; }
 
-        private List<ILaunchEventListener> listeners = new List<ILaunchEventListener>();
-
-        public void AddLaunchEventListener(ILaunchEventListener listener) {
-            if (!listeners.Contains(listener))
-                listeners.Add(listener);
+        public LaunchEvent(int key, KeyState state) {
+            this.Key = key;
+            this.State = state;
         }
 
+        public bool IsPressed() {
+            return State == KeyState.Pressed;
+        }
+    }
+
+    public class LaunchEventHandler {
+
+        public event KeyPressedHandler LaunchEvents;
+        public delegate void KeyPressedHandler(LaunchEvent events);
+
         public void CallEvent(LaunchEvent launchEvent) {
-            foreach (ILaunchEventListener listener in listeners) {
-                listener.KeyPressedEvent(launchEvent);
-            }
+            LaunchEvents(launchEvent);
         }
     }
 }

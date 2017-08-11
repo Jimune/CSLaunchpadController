@@ -30,7 +30,7 @@ namespace Launchpad {
             OpenConnection();
             MidiMessageHandler.Instance().Init(Input, Output);
             LaunchPageHandler.Instance().CreatePages();
-            MidiMessageHandler.Instance().LaunchEventHandler.AddLaunchEventListener(new LaunchpadListener());
+            MidiMessageHandler.Instance().LaunchEventHandler.LaunchEvents += this.KeyPressedEvent;
 
             Application.Run(Screen);
         }
@@ -83,6 +83,17 @@ namespace Launchpad {
 
             if (Output != null) {
                 Output.Close();
+            }
+        }
+
+        public void KeyPressedEvent(LaunchEvent launchEvent) {
+            LaunchAction action = LaunchPageHandler.Instance().CurPage.GetAction(launchEvent.Key);
+
+            if (action != null) {
+                if (launchEvent.IsPressed())
+                    action.Press();
+                else
+                    action.Release();
             }
         }
 

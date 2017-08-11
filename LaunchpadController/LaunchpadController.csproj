@@ -68,12 +68,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="LaunchHandler\ILaunchEventListener.cs" />
-    <Compile Include="LaunchHandler\LaunchEvent.cs" />
     <Compile Include="LaunchHandler\LaunchEventHandler.cs" />
     <Compile Include="LaunchHandler\MidiMessageHandler.cs" />
     <Compile Include="LaunchpadController.cs" />
-    <Compile Include="LaunchpadListener.cs" />
     <Compile Include="LaunchScreen.cs">
       <SubType>Form</SubType>
     </Compile>
