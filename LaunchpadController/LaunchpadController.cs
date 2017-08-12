@@ -26,11 +26,12 @@ namespace Launchpad {
                 
             }
 
-            Screen.TextView.AppendText("Located input and output of Launchpad MIDI\n");
-            OpenConnection();
-            MidiMessageHandler.Instance().Init(Input, Output);
-            LaunchPageHandler.Instance().CreatePages();
-            MidiMessageHandler.Instance().LaunchEventHandler.LaunchEvents += this.KeyPressedEvent;
+            Log.Info("Located input and output of Launchpad MIDI");
+
+            if (OpenConnection()) {
+                MidiMessageHandler.Instance().Init(Input, Output);
+                LaunchPageHandler.Instance().CreatePages();
+            }
 
             Application.Run(Screen);
         }
@@ -57,19 +58,32 @@ namespace Launchpad {
             }
         }
 
-        public void OpenConnection() {
-            if (Input != null) {
-                Input.Open();
-                Input.StartReceiving(null);
-            } else {
-                Console.WriteLine("Input is null");
+        public bool OpenConnection() {
+            bool success = true;
+
+            try {
+                if (Input != null) {
+                    Input.Open();
+                    Input.StartReceiving(null);
+                } else {
+                    Console.WriteLine("Input is null");
+                    Log.Severe("Input location of Midi device was not found!");
+                    success = false;
+                }
+
+                if (Output != null && !success) {
+                    Output.Open();
+                } else {
+                    Console.WriteLine("Output is null");
+                    Log.Severe("Output location of Midi device was not found!");
+                }
+            } catch (Midi.DeviceException mde) {
+                Console.Write(mde.ToString());
+                Log.Severe("Unable to open connection to Midi device; Device already in use!");
+                success = false;
             }
 
-            if (Output != null) {
-                Output.Open();
-            } else {
-                Console.WriteLine("Output is null");
-            }
+            return success;
         }
 
         public void CloseConnection(bool shutdown) {
@@ -83,17 +97,6 @@ namespace Launchpad {
 
             if (Output != null) {
                 Output.Close();
-            }
-        }
-
-        public void KeyPressedEvent(LaunchEvent launchEvent) {
-            LaunchAction action = LaunchPageHandler.Instance().CurPage.GetAction(launchEvent.Key);
-
-            if (action != null) {
-                if (launchEvent.IsPressed())
-                    action.Press();
-                else
-                    action.Release();
             }
         }
 

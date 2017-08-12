@@ -5,7 +5,7 @@ namespace Launchpad {
 
     public partial class LaunchScreen : Form {
         private Button Settings;
-        public TextBox TextView;
+        public RichTextBox TextView;
         private Button ForceKill;
 
         public LaunchScreen() {
@@ -15,7 +15,7 @@ namespace Launchpad {
         private void InitializeComponent() {
             this.Settings = new System.Windows.Forms.Button();
             this.ForceKill = new System.Windows.Forms.Button();
-            this.TextView = new System.Windows.Forms.TextBox();
+            this.TextView = new System.Windows.Forms.RichTextBox();
             this.SuspendLayout();
             // 
             // Settings
@@ -26,7 +26,7 @@ namespace Launchpad {
             this.Settings.TabIndex = 0;
             this.Settings.Text = "Settings";
             this.Settings.UseVisualStyleBackColor = true;
-            this.Settings.Click += new EventHandler(this.Settings_Click);
+            this.Settings.Click += new System.EventHandler(this.Settings_Click);
             // 
             // ForceKill
             // 
@@ -36,19 +36,19 @@ namespace Launchpad {
             this.ForceKill.TabIndex = 1;
             this.ForceKill.Text = "Force Kill";
             this.ForceKill.UseVisualStyleBackColor = true;
-            this.ForceKill.Click += new EventHandler(this.ForceKill_Click);
+            this.ForceKill.Click += new System.EventHandler(this.ForceKill_Click);
             // 
             // TextView
             // 
-            this.TextView.AcceptsReturn = true;
             this.TextView.AcceptsTab = true;
+            this.TextView.Font = new System.Drawing.Font("Lucida Console", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.TextView.Location = new System.Drawing.Point(13, 13);
-            this.TextView.Multiline = true;
             this.TextView.Name = "TextView";
             this.TextView.ReadOnly = true;
-            this.TextView.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.TextView.Size = new System.Drawing.Size(983, 420);
             this.TextView.TabIndex = 2;
+            this.TextView.Text = "";
+            this.TextView.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextView_KeyPress);
             // 
             // LaunchScreen
             // 
@@ -56,10 +56,11 @@ namespace Launchpad {
             this.Controls.Add(this.TextView);
             this.Controls.Add(this.ForceKill);
             this.Controls.Add(this.Settings);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "LaunchScreen";
             this.Text = "Launchpad Console";
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
@@ -73,6 +74,10 @@ namespace Launchpad {
 
         private void ForceKill_Click(object sender, EventArgs e) {
             LaunchpadController.Instance.Kill();
+        }
+
+        private void TextView_KeyPress(object sender, KeyPressEventArgs e) {
+            e.Handled = true;
         }
     }
 }

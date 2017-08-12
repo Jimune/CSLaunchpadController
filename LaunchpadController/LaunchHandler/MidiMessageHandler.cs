@@ -1,6 +1,8 @@
 ﻿using System;
 using Midi;
 using Launchpad.Utils;
+using Launchpad.Pages.Actions;
+using Launchpad.Pages;
 
 namespace Launchpad.LaunchHandler {
 
@@ -24,11 +26,23 @@ namespace Launchpad.LaunchHandler {
         public void Init(InputDevice input, OutputDevice output) {
             this.input = input;
             this.output = output;
-            this.LaunchEventHandler = new LaunchEventHandler();
+            this.LaunchEventHandler = LaunchEventHandler.Instance();
 
+            LaunchEventHandler.LaunchEvents += new LaunchEventHandler.KeyPressedHandler(this.KeyPressedEvent);
             input.ControlChange += new InputDevice.ControlChangeHandler(this.ControlChange);
             input.NoteOn += new InputDevice.NoteOnHandler(this.NoteOnHandler);
             input.NoteOff += new InputDevice.NoteOffHandler(this.NoteOffHandler);
+        }
+
+        private void KeyPressedEvent(LaunchEvent launchEvent) {
+            LaunchAction action = LaunchPageHandler.Instance().CurPage.GetAction(launchEvent.Key);
+
+            if (action != null) {
+                if (launchEvent.IsPressed())
+                    action.Press();
+                else
+                    action.Release();
+            }
         }
 
         private void ControlChange(ControlChangeMessage msg) {
@@ -47,11 +61,17 @@ namespace Launchpad.LaunchHandler {
         }
 
         public void SendMessage(int key, int color) {
-            output.SendNoteOn(Channel.Channel1, (Pitch) key, color);
+            if (output != null)
+                output.SendNoteOn(Channel.Channel1, (Pitch)key, color);
+            else
+                Log.Severe("Output connection was not made but a message was attempted to send!");
         }
 
         public void ClearPad() {
-            output.SendControlChange(Channel.Channel1, 0, 0);
+            if (output != null)
+                output.SendControlChange(Channel.Channel1, 0, 0);
+            else
+                Log.Severe("Output connection was not made but a message was attempted to send!");
         }
     }
 }

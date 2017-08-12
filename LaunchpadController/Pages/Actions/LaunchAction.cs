@@ -1,6 +1,6 @@
 ﻿using Launchpad.Utils;
 
-namespace Launchpad.Pages {
+namespace Launchpad.Pages.Actions {
 
     public abstract class LaunchAction {
 

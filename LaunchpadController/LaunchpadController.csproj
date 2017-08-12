@@ -75,7 +75,7 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Pages\Actions\MainPage\PrintScreenAction.cs" />
-    <Compile Include="Pages\LaunchAction.cs" />
+    <Compile Include="Pages\Actions\LaunchAction.cs" />
     <Compile Include="Pages\LaunchPage.cs" />
     <Compile Include="Pages\LaunchPageHandler.cs" />
     <Compile Include="Program.cs" />
@@ -83,6 +83,7 @@
     <Compile Include="Utils\KeyColor.cs" />
     <Compile Include="Utils\KeyState.cs" />
     <Compile Include="Utils\LaunchUtils.cs" />
+    <Compile Include="Utils\Log.cs" />
     <EmbeddedResource Include="LaunchScreen.resx">
       <DependentUpon>LaunchScreen.cs</DependentUpon>
     </EmbeddedResource>
