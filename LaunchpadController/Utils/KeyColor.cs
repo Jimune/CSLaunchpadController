@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Launchpad.Utils {
+﻿namespace Launchpad.Utils {
 
     public enum KeyColor {
         Off = 76,

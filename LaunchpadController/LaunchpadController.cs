@@ -10,7 +10,7 @@ namespace Launchpad {
 
     public class LaunchpadController {
 
-        public static LaunchpadController Instance { get; set; }
+        public static LaunchpadController Instance { get; private set; }
         public LaunchScreen Screen { get; private set; }
         public OutputDevice Output { get; private set; }
         public InputDevice Input { get; private set; }
