@@ -26,11 +26,13 @@ namespace Launchpad {
                 
             }
 
-            Log.Info("Located input and output of Launchpad MIDI");
+            Log.Debug("Located input and output of Launchpad MIDI");
 
             if (OpenConnection()) {
                 MidiMessageHandler.Instance().Init(Input, Output);
                 LaunchPageHandler.Instance().CreatePages();
+
+                Log.Info("Everything is set up and working!");
             }
 
             Application.Run(Screen);
@@ -68,14 +70,19 @@ namespace Launchpad {
                 } else {
                     Console.WriteLine("Input is null");
                     Log.Severe("Input location of Midi device was not found!");
+
                     success = false;
                 }
 
-                if (Output != null && !success) {
+                if (Output != null) {
                     Output.Open();
                 } else {
                     Console.WriteLine("Output is null");
-                    Log.Severe("Output location of Midi device was not found!");
+
+                    if (success)
+                        Log.Severe("Output location of Midi device was not found!");
+
+                    success = false;
                 }
             } catch (Midi.DeviceException mde) {
                 Console.Write(mde.ToString());

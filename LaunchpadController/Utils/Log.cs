@@ -43,5 +43,10 @@ namespace Launchpad.Utils {
         public static void Severe(params object[] msg) {
             Raw("[SEVERE] ", Color.Red, msg);
         }
+
+        public static void Debug(params object[] msg) {
+            if (GlobalVars.DEBUG)
+                Raw("[DEBUG] ", Color.Blue, msg);
+        }
     }
 }

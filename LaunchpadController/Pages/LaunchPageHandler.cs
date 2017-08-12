@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Launchpad.Pages.Actions.MainPage;
+using Launchpad.Pages.Actions.UtilPage;
 using Launchpad.Utils;
 
 namespace Launchpad.Pages {
@@ -97,6 +98,9 @@ namespace Launchpad.Pages {
         public void CreatePages() {
             AddPage(new LaunchPage(
                 new PrintScreenAction()
+                ));
+            AddPage(new LaunchPage(
+                new SpeedShiftAction()
                 ));
 
             LaunchUtils.SetPadFromPage(CurPage);

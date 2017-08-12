@@ -54,6 +54,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>refs\Midi.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>refs\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Management" />
@@ -76,10 +79,12 @@
     </Compile>
     <Compile Include="Pages\Actions\MainPage\PrintScreenAction.cs" />
     <Compile Include="Pages\Actions\LaunchAction.cs" />
+    <Compile Include="Pages\Actions\UtilPage\SpeedShiftAction.cs" />
     <Compile Include="Pages\LaunchPage.cs" />
     <Compile Include="Pages\LaunchPageHandler.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utils\GlobalVars.cs" />
     <Compile Include="Utils\KeyColor.cs" />
     <Compile Include="Utils\KeyState.cs" />
     <Compile Include="Utils\LaunchUtils.cs" />
@@ -122,6 +127,8 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Pages\Actions\SettingsPage\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
